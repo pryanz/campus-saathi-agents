@@ -1,12 +1,3 @@
-"""
-Tests for UCS / A* (Algorithm 1).
-
-Run from the repository root:
-    python -m pytest tests/test_astar.py -v
-or without pytest:
-    python tests/test_astar.py
-"""
-
 import json
 import os
 import sys
@@ -25,10 +16,6 @@ from core.metrics import MetricsTracker
 from core.problem import CampusProblem
 from envi.campus_graph import CampusGraph
 
-# --------------------------------------------------------------------------
-# Textbook weighted graph: Romania road map (Russell & Norvig, AIMA Fig. 3.2)
-# Optimal Arad -> Bucharest = 418 via Sibiu, Rimnicu Vilcea, Pitesti.
-# --------------------------------------------------------------------------
 ROMANIA_EDGES = [
     ("Arad", "Zerind", 75), ("Arad", "Sibiu", 140), ("Arad", "Timisoara", 118),
     ("Zerind", "Oradea", 71), ("Oradea", "Sibiu", 151),
@@ -42,11 +29,6 @@ ROMANIA_EDGES = [
 
 
 def _romania_problem():
-    """Wrap the textbook graph in the project's own CampusGraph/CampusProblem.
-
-    The goal is "complete the step at Bucharest" (service time 0), so the
-    optimal cost equals the shortest-path cost Arad -> Bucharest.
-    """
     names = sorted({n for u, v, _ in ROMANIA_EDGES for n in (u, v)})
     data = {
         "nodes": {n: {"cluster": "ro", "type": "city"} for n in names},
@@ -71,7 +53,6 @@ def _campus_problem():
 
 
 def _replay(problem, plan):
-    """Execute a plan, return (final_state, total_cost) using the problem API."""
     state, cost = problem.initial_state(), 0.0
     for action in plan:
         travel, service = action_cost(problem, state, action)
@@ -81,8 +62,6 @@ def _replay(problem, plan):
         state = nxt
     return state, cost
 
-
-# ------------------------------- UCS ---------------------------------------
 def test_ucs_textbook_graph_optimal_cost():
     problem = _romania_problem()
     result = ucs_search(problem)
@@ -99,8 +78,6 @@ def test_ucs_plan_replays_to_goal_with_reported_cost():
     assert problem.goal_test(final_state)
     assert cost == result.cost
 
-
-# ------------------------------- A* ----------------------------------------
 def test_astar_matches_ucs_on_textbook_graph():
     problem = _romania_problem()
     ucs = ucs_search(problem)
@@ -128,8 +105,6 @@ def test_astar_same_optimal_cost_as_ucs_but_fewer_expansions_on_campus():
         assert problem.goal_test(final_state)
         assert cost == res.cost
 
-
-# --------------------- admissibility / consistency -------------------------
 def _all_transitions(problem):
     """Enumerate every reachable (state, action, next_state, step_cost)."""
     start = problem.initial_state()
@@ -171,7 +146,6 @@ def test_heuristics_never_exceed_true_cost_from_start():
     assert ClusterAwareHeuristic(problem)(s0) <= optimal
 
 
-# ------------------------------- agents ------------------------------------
 def test_agents_execute_plan_and_log_expansions():
     problem = _campus_problem()
     for agent in (UCSAgent(problem), AStarAgent(problem)):
