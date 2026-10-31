@@ -10,7 +10,7 @@
         "panini_gate": {"cluster": "hostel", "type": "room"},
         "office": {"cluster": "hostel", "type": "room"},
         "room": {"cluster": "hostel", "type": "room"},
-        "mess": {"cluster": "hostel", "type": "room"}
+        "shop": {"cluster": "hostel", "type": "room"}
     },
     "edges":[
         {"from": "gate", "to": "lhtc_gate", "weight": 15},
