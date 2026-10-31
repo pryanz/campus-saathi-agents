@@ -1,16 +1,17 @@
 import numpy as np
 
 class RoomCounter:
-    def __init__(self, room_id: str, steps_config: dict, num_counters: int = 4):
+    def __init__(self, room_id: str, steps_config: dict):
         self.room_id = room_id
-        self.num_counters = num_counters
 
         step_info = steps_config.get(room_id, {})
+
+        self.num_counters = step_info.get("num_counters",3)
         self.mean_service_time = step_info.get("mean_service_time", 3.0)
         
         self.queue = []
-        
-        self.busy_counters = [0] * num_counters
+
+        self.busy_counters = [0] * self.num_counters
     
     def queue_length(self) -> int:
         #this will return number of agent currently in queue

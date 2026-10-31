@@ -14,7 +14,7 @@ class CampusSimulator:
         self.rng = get_rng(seed)
         
         self.counters = {
-            room_id: RoomCounter(room_id, self.steps_config, num_counters=2)
+            room_id: RoomCounter(room_id, self.steps_config)
             for room_id in self.steps_config.keys()
         }
 
