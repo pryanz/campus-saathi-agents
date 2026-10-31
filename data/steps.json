@@ -2,56 +2,67 @@
     "gate": {
         "step_name": "Entry Reporting & ID Verification",
         "cluster": "neutral",
-        "mean_service_time": 2.0
+        "mean_service_time": 2.0,
+        "num_counters": 1
     },
     "lhtc_gate": {
         "step_name": "Allotment Verification",
         "cluster": "academic",
-        "mean_service_time": 3.0
+        "mean_service_time": 3.0,
+        "num_counters": 3
     },
     "L-103": {
         "step_name": "Document Verification",
         "cluster": "academic",
-        "mean_service_time": 5.0
+        "mean_service_time": 5.0,
+        "num_counters": 3
     },
     "L-104": {
         "step_name": "Fee Clearance & Accounts",
         "cluster": "academic",
-        "mean_service_time": 10.0
+        "mean_service_time": 10.0,
+        "num_counters": 2
     },
     "L-105": {
         "step_name": "Department Registration",
         "cluster": "academic",
-        "mean_service_time": 5.0
+        "mean_service_time": 5.0,
+        "num_counters": 2
     },
     "L-106": {
         "step_name": "ID Card Biometrics",
         "cluster": "academic",
-        "mean_service_time": 10.0
+        "mean_service_time": 10.0,
+        "num_counters": 3
     },
     "L-206": {
         "step_name": "Library Membership",
         "cluster": "academic",
-        "mean_service_time": 2.0
+        "mean_service_time": 2.0,
+        "num_counters": 2
     },
     "panini_gate": {
         "step_name": "Hostel Allotment Letter",
         "cluster": "hostel",
-        "mean_service_time": 2.0
+        "mean_service_time": 2.0,
+        "num_counters": 2
     },
     "room": {
         "step_name": "Room Inspection",
         "cluster": "hostel",
-        "mean_service_time": 1.0
+        "mean_service_time": 10.0,
+        "num_counters": 10
     },
     "office": {
         "step_name": "Warden Clearance",
         "cluster": "hostel",
-        "mean_service_time": 5.0
+        "mean_service_time": 5.0,
+        "num_counters": 1
     },
     "shop": {
         "step_name": "Necessities Shopping",
         "cluster": "hostel",
-        "mean_service_time": 10.0
+        "mean_service_time": 10.0,
+        "num_counters": 2
     }
 }
