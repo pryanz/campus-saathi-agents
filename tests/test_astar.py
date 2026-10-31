@@ -178,4 +178,4 @@ if __name__ == "__main__":
     for t in tests:
         t()
         print("PASS", t.__name__)
-    print(f"\n{len(tests)} tests passed")c
+    print(f"\n{len(tests)} tests passed")
