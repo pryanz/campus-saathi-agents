@@ -11,8 +11,9 @@ from algorithms.dfs import DFSAgent
 from algorithms.astar import AStarAgent
 
 class CampusSimulator:
-    def __init__(self, campus_map_path: str = "data/campus_map.json", steps_config_path: str = "data/steps.json", seed: int = 42):
+    def __init__(self, campus_map_path: str = "data/campus_map.json", steps_config_path: str = "data/steps.json", seed: int = 42, observation_level: int = 0):
         self.graph = CampusGraph(campus_map_path)
+        self.observation_level = observation_level # 0: blind, 1: local, 2: global queues
         
         with open(steps_config_path, 'r') as f:
             self.steps_config = json.load(f)
@@ -73,8 +74,30 @@ class CampusSimulator:
                 if target in self.counters and self.bg_rng.random() < 0.3:
                     self.counters[target].add_to_queue(bg["id"])
 
-    def run_simulation(self, agent, max_steps: int = 500, congestion: bool = True, start_room: str = None, completed_steps: frozenset = None) -> dict:
+    def get_queue_observation(self, current_room: str = None, observation_level: int = None) -> dict:
+        # observation_level ke hisab se queue data bhejenge (0: blind, 1: local, 2: global)
+        level = observation_level if observation_level is not None else self.observation_level
+        if level <= 0:
+            return {r: 0.0 for r in self.room_ids}
+
+        live_waits = {}
+        for r in self.room_ids:
+            q_len = len(self.counters[r].queue) if r in self.counters else 0
+            room_crowd = sum(1 for bg in self.background_agents if bg["current_room"] == r)
+            effective_crowd = max(q_len, 1 + room_crowd)
+            mean_service = float(self.steps_config.get(r, {}).get("mean_service_time", 3.0))
+            live_waits[r] = float(effective_crowd * (mean_service / 2.0))
+
+        if level == 1:
+            neighbors = set(self.graph.get_neighbors(current_room).keys()) if current_room else set()
+            visible = neighbors | ({current_room} if current_room else set())
+            return {r: (live_waits[r] if r in visible else 0.0) for r in self.room_ids}
+
+        return live_waits
+
+    def run_simulation(self, agent, max_steps: int = 500, congestion: bool = True, start_room: str = None, completed_steps: frozenset = None, observation_level: int = None) -> dict:
         metrics = MetricsTracker()
+        effective_obs_level = observation_level if observation_level is not None else self.observation_level
         if start_room is not None or completed_steps is not None:
             init_room = start_room if start_room is not None else self.problem.start_room
             init_completed = completed_steps if completed_steps is not None else frozenset()
@@ -98,13 +121,17 @@ class CampusSimulator:
                     counter.tick(self.rng)            
                 self._update_background_agents()
 
+            obs = self.get_queue_observation(current_room, effective_obs_level)
             try:
-                action = agent.select_action((current_room, completed_steps), metrics=None)
+                action = agent.select_action((current_room, completed_steps), metrics=None, observation=obs)
             except TypeError:
                 try:
-                    action = agent.select_action((current_room, completed_steps))
-                except Exception:
-                    action = None
+                    action = agent.select_action((current_room, completed_steps), metrics=None)
+                except TypeError:
+                    try:
+                        action = agent.select_action((current_room, completed_steps))
+                    except Exception:
+                        action = None
 
             if not action:
                 legal_actions = self.problem.actions((current_room, completed_steps))
@@ -168,6 +195,7 @@ class CampusSimulator:
         total_cost = travel_time + wait_time + service_time
         return {
             "agent": getattr(agent, "name", "Agent"),
+            "observation_level": effective_obs_level,
             "total_steps": step_count,
             "metrics": {
                 "travel_time": travel_time,

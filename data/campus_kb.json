@@ -1,0 +1,267 @@
+{
+  "institution": "IIITDM Jabalpur / JoSAA Physical Reporting 2026",
+  "last_updated": "2026-11-01",
+  "documents": [
+    {
+      "id": "doc_10th",
+      "name": "Class 10 (High School) Marksheet / Certificate",
+      "purpose": "Proof of Date of Birth (DOB) and candidate's parentage name spelling.",
+      "mandatory_for": "All candidates (General, OBC, SC, ST, EWS, PwD)",
+      "format": "Original Certificate + 2 self-attested photocopies",
+      "cutoff_rules": "None. Must be issued by a recognized State/Central Board (CBSE, ICSE, State Boards).",
+      "common_issues": "Name mismatch with Aadhaar/JEE Rank card. If minor spelling discrepancy exists, an affidavit on Rs. 50 stamp paper is accepted at the Exception Desk.",
+      "where_to_fix": "Campus Notary / Exception Desk at Admin Block Room 102.",
+      "source": "JoSAA Physical Reporting Manual 2026, Section 3.1"
+    },
+    {
+      "id": "doc_12th",
+      "name": "Class 12 (Qualifying Exam) Marksheet and Passing Certificate",
+      "purpose": "Proof of fulfilling minimum 75% marks (or top 20 percentile) eligibility in qualifying exam.",
+      "mandatory_for": "All candidates",
+      "format": "Original Marksheet + 2 self-attested photocopies",
+      "cutoff_rules": "Internet DigiLocker copy is valid ONLY IF digitally signed or counter-signed by School Principal with official seal.",
+      "common_issues": "DigiLocker printout without digital signature or school seal will be placed on hold at Counter B.",
+      "where_to_fix": "Central Xerox & Printing Center (LHTC Ground Floor) for fresh printouts.",
+      "source": "CSAB/JoSAA Business Rules 2026, Annexure 2"
+    },
+    {
+      "id": "doc_obc_ncl",
+      "name": "OBC-NCL (Non-Creamy Layer) Category Certificate",
+      "purpose": "Reservation benefit under Other Backward Classes Non-Creamy Layer.",
+      "mandatory_for": "All OBC-NCL seat allotment candidates",
+      "format": "Original Certificate in Central Government Format + 2 photocopies",
+      "cutoff_rules": "STRICT: Must be issued on or after April 1, 2026. Backward class caste must be present in the Central List of OBCs.",
+      "common_issues": "State Government format or certificate issued before April 1, 2026 is strictly NOT valid for JoSAA. If missing Central format, student must submit Undertaking (Annexure 7) at Exception Desk promising submission within 7 days, else seat shifts to General in CSAB.",
+      "where_to_fix": "Exception Desk at L-103 to submit Undertaking Format Annexure 7.",
+      "source": "JoSAA Category Reservation Policy 2026, Rule 14.3"
+    },
+    {
+      "id": "doc_ews",
+      "name": "EWS (Economically Weaker Section) Income & Asset Certificate",
+      "purpose": "Reservation benefit under General-EWS category.",
+      "mandatory_for": "All GEN-EWS seat allotment candidates",
+      "format": "Original Certificate in Central Government Format (Annexure 3) + 2 photocopies",
+      "cutoff_rules": "STRICT: Valid for Financial Year 2025-2026, issued on or after April 1, 2026 by an authorized Revenue Officer (Tehsildar or above).",
+      "common_issues": "State EWS format or expired financial year. Requires Annexure 7 undertaking at Exception Desk if central copy is in transit.",
+      "where_to_fix": "Exception Desk at L-103.",
+      "source": "DoPT EWS Guidelines 2026 / JoSAA Rulebook"
+    },
+    {
+      "id": "doc_sc_st",
+      "name": "SC / ST Caste Certificate",
+      "purpose": "Reservation benefit under Scheduled Caste / Scheduled Tribe.",
+      "mandatory_for": "All SC/ST category candidates",
+      "format": "Original Certificate + 2 photocopies",
+      "cutoff_rules": "No expiration date / cutoff date, but must strictly be in Central Govt format and issued by Sub-Divisional Magistrate (SDM), Tehsildar, or District Magistrate.",
+      "common_issues": "Undated certificates or certificates from unauthorized local municipal councilors are rejected at Counter B.",
+      "where_to_fix": "Contact Institute Legal Cell / Exception Desk at Admin Block.",
+      "source": "Central Reservation Guidelines, Form SC/ST"
+    },
+    {
+      "id": "doc_medical",
+      "name": "Medical Fitness Certificate",
+      "purpose": "Proof of medical fitness to study and stay in hostel.",
+      "mandatory_for": "All admitted students",
+      "format": "Original filled Medical Certificate in official JoSAA Annexure 8 format, signed and stamped by registered Medical Practitioner (MBBS/MD) with Registration Number.",
+      "cutoff_rules": "Issued within 30 days prior to physical reporting date.",
+      "common_issues": "Missing doctor registration number or doctor seal. Private clinic hospital slips without JoSAA standard form are rejected.",
+      "where_to_fix": "Campus Primary Health Center (PHC, Opposite Hall 3). Resident Medical Officer signs and certifies JoSAA medical forms after rapid checkup between 9:00 AM and 6:00 PM.",
+      "source": "JoSAA Physical Verification Annexure 8"
+    },
+    {
+      "id": "doc_anti_ragging",
+      "name": "Anti-Ragging Undertaking by Student & Parent",
+      "purpose": "Mandatory UGC anti-ragging compliance compliance undertaking.",
+      "mandatory_for": "All students",
+      "format": "Printed Undertaking with online Reference Number from antiragging.in or amanmovement.org (Signed by Student & Parent)",
+      "cutoff_rules": "Must mention Institute Name: IIITDM Jabalpur and Institute Director details.",
+      "common_issues": "Student did not fill the online form beforehand.",
+      "where_to_fix": "Computer Center / Library 1st Floor internet terminals to fill online form and take immediate printout at Central Xerox Center.",
+      "source": "UGC Anti-Ragging Regulations 2009 / IIITDMJ Circular"
+    },
+    {
+      "id": "doc_gap",
+      "name": "Gap Certificate / Affidavit (for Droppers / Year Gap)",
+      "purpose": "Explanation of academic gap after passing Class 12.",
+      "mandatory_for": "Students who passed Class 12 in 2025 or earlier and took a gap for JEE preparation.",
+      "format": "Original Affidavit on Rs. 50 or Rs. 100 Non-Judicial Stamp Paper, attested by Notary Public.",
+      "cutoff_rules": "Must state that the candidate was preparing for competitive exams and was not involved in any unlawful activity or enrolled in another degree.",
+      "common_issues": "Students forget to bring stamp paper from hometown.",
+      "where_to_fix": "Campus Notary Desk at Administrative Block Room 102 (Stamp paper and notary stamp available on-spot for Rs. 150).",
+      "source": "Institute Admission Code of Conduct"
+    },
+    {
+      "id": "doc_fee_receipt",
+      "name": "JoSAA Seat Acceptance Fee (SAF) & Partial Admission Fee (PAF) Receipts",
+      "purpose": "Proof of initial tuition and admission fee payment.",
+      "mandatory_for": "All candidates",
+      "format": "Printout of candidate portal payment confirmation slip showing transaction reference ID.",
+      "cutoff_rules": "Both SAF (Rs. 35,000 / 17,500) and PAF (Rs. 45,000 / 20,000) receipts are required before visiting Counter L-104 (Accounts).",
+      "common_issues": "Payment debited but receipt not downloaded from JoSAA portal.",
+      "where_to_fix": "Accounts Verification Desk at L-104 has portal access to verify transaction directly via JEE Application Number.",
+      "source": "JoSAA Fee Reconciliation Protocol"
+    }
+  ],
+  "facilities": [
+    {
+      "id": "fac_xerox",
+      "name": "Central Xerox & Stationery Center",
+      "location": "LHTC Ground Floor (near L-103) & Shopping Complex",
+      "timings": "8:30 AM to 8:30 PM (All reporting days)",
+      "services": [
+        "Photocopy / Xerox (B&W Rs. 1.50/page, Color Rs. 5/page)",
+        "Passport size photographs instant printing (8 copies for Rs. 80)",
+        "Docu-files, paper folders, staplers, glue, pens, highlighters",
+        "Online printouts from pendrive or WhatsApp/Email"
+      ],
+      "contact": "+91-761-2794091"
+    },
+    {
+      "id": "fac_notary",
+      "name": "Campus Notary & Affidavit Desk",
+      "location": "Administrative Block, Room 102 (Right wing)",
+      "timings": "9:00 AM to 6:00 PM",
+      "services": [
+        "Non-Judicial Stamp Paper (Rs. 50 and Rs. 100) available on spot",
+        "Gap Year Affidavit drafting and notarization",
+        "Minor Name / DOB discrepancy affidavit attestation",
+        "Anti-Ragging and Local Guardian Undertaking attestation"
+      ],
+      "charges": "Rs. 100 - Rs. 150 per affidavit including stamp paper."
+    },
+    {
+      "id": "fac_phc",
+      "name": "Primary Health Center (PHC) & Medical Unit",
+      "location": "Opposite Hall of Residence 3 (Central Campus Road)",
+      "timings": "24x7 Emergency; Medical Examination: 9:00 AM - 6:00 PM",
+      "services": [
+        "JoSAA Annexure 8 Medical Fitness Certificate verification & doctor endorsement",
+        "Blood group confirmation test (Rs. 50 on-spot)",
+        "First aid, emergency ambulance, and basic medicines"
+      ],
+      "doctor_in_charge": "Dr. R. K. Sharma (Chief Medical Officer)"
+    },
+    {
+      "id": "fac_bank",
+      "name": "State Bank of India (SBI) Branch & ATM",
+      "location": "Campus Shopping Complex (opposite Core Lab)",
+      "timings": "Branch: 10:00 AM - 4:00 PM; ATMs (2 machines): 24 Hours",
+      "services": [
+        "Cash withdrawal for institute and mess caution deposits",
+        "Demand Draft (DD) issuance for institute fees",
+        "New student zero-balance savings account opening desk"
+      ]
+    },
+    {
+      "id": "fac_hostel_office",
+      "name": "Panini / Hostel Allotment Office",
+      "location": "Panini Gate / Hall of Residence 1 & 4 Ground Floor",
+      "timings": "9:00 AM to 7:00 PM",
+      "services": [
+        "Room key distribution & physical inventory checklist (bed, table, chair, almirah)",
+        "Mess registration and mess card issuance",
+        "Biometric fingerprint enrollment for hostel gate entry"
+      ]
+    }
+  ],
+  "procedures": [
+    {
+      "step_number": 1,
+      "station": "gate",
+      "name": "Entry Reporting & Token Generation",
+      "details": "Student presents JoSAA Provisional Seat Allotment letter and Govt ID at Gate. Security validates reporting slot and issues token color tag. Parents are guided to Parent Lounge at LHTC Foyer."
+    },
+    {
+      "step_number": 2,
+      "station": "lhtc_gate",
+      "name": "Batch Screening & File Collection",
+      "details": "Staff checks basic document readiness, gives institute reporting docket file, and routes candidate to Academic rooms (L-103 to L-106)."
+    },
+    {
+      "step_number": 3,
+      "station": "L-103",
+      "name": "Document Verification Counter",
+      "details": "Physical verification of 10th, 12th, Category, Medical, and Anti-ragging documents. Verified files receive green stamp. Any discrepancy is transferred to the Exception Desk located inside L-103."
+    },
+    {
+      "step_number": 4,
+      "station": "L-104",
+      "name": "Fee Clearance & Accounts Reconciliation",
+      "details": "SAF and PAF receipts reconciled. Balance institute tuition and hostel seat rent fees cleared via online POS / net banking / SBI Challan. Receipt signed by Accounts Officer."
+    },
+    {
+      "step_number": 5,
+      "station": "L-105",
+      "name": "Department & Academic Roll No. Registration",
+      "details": "Official Institute Roll Number (e.g., 2026BCS001) generated in ERP. Course curriculum syllabus booklet and academic handbook handed over."
+    },
+    {
+      "step_number": 6,
+      "station": "L-106",
+      "name": "ID Card Biometrics & Photo Capture",
+      "details": "Live webcam photograph and dual thumb biometrics captured for permanent Smart RFID Student Identity Card."
+    },
+    {
+      "step_number": 7,
+      "station": "L-206",
+      "name": "Library Membership & Digital Library Card",
+      "details": "Library ERP activation, digital repository access credentials issued, book bank scheme registration."
+    },
+    {
+      "step_number": 8,
+      "station": "panini_gate / office",
+      "name": "Hostel Allotment & Warden Clearance",
+      "details": "Present green-stamped reporting dossier to Hostel Warden Office. Room allocation slip generated. Pay Mess Caution deposit (Rs. 18,000 per semester)."
+    },
+    {
+      "step_number": 9,
+      "station": "room",
+      "name": "Hostel Room Handover & Inspection",
+      "details": "Collect room keys from caretaker. Inspect room amenities (ceiling fan, study table, chair, ethernet port, wardrobe locks) and sign the physical handover sheet."
+    },
+    {
+      "step_number": 10,
+      "station": "shop",
+      "name": "Hostel Necessities & Mattress Purchase",
+      "details": "Optional but recommended: Purchase mattress, bedsheets, bucket, mug, curtains, extension board, and bicycle from the campus shopping complex vendor."
+    }
+  ],
+  "faqs": [
+    {
+      "question": "What if my OBC-NCL or EWS certificate is in State Govt format or dated before April 1, 2026?",
+      "answer": "State format or old certificates are strictly NOT accepted for reservation. However, you will NOT be rejected immediately on spot: visit the Exception Desk at L-103 and submit an Undertaking (JoSAA Annexure 7). You will be given 7 days to produce the Central certificate. If you fail, your category will be automatically reclassified as OPEN (General) for subsequent CSAB rounds.",
+      "category": "documents",
+      "citation": "JoSAA Business Rules 2026, Clause 14.3.2"
+    },
+    {
+      "question": "Where can I get stamp paper and affidavit on campus?",
+      "answer": "Campus Notary & Affidavit Desk is located in Administrative Block, Room 102. Non-Judicial stamp papers of Rs. 50 and Rs. 100 with authorized notary stamps are available for Gap Certificates and Minor Discrepancy Undertakings between 9:00 AM and 6:00 PM.",
+      "category": "facilities",
+      "citation": "Institute Admin Circular / Campus Map Admin Wing"
+    },
+    {
+      "question": "What if I did not get the JoSAA Medical Certificate signed before coming?",
+      "answer": "Do not panic! The Institute Primary Health Center (PHC, located opposite Hall 3) has resident medical doctors available from 9:00 AM to 6:00 PM. They perform a rapid health checkup (blood pressure, vision, blood group) and endorse the official JoSAA Annexure 8 form on the spot.",
+      "category": "medical",
+      "citation": "PHC Onboarding Notice 2026"
+    },
+    {
+      "question": "Can parents stay overnight in the campus hostel?",
+      "answer": "Male parents/guardians can book temporary shared accommodation in Hall of Residence 1 / 4 Guest Rooms (subject to availability, Rs. 400/night). Female parents can stay in Hall of Residence 7 Guest Wing. Booking desk is available at the Warden Office near Panini Gate.",
+      "category": "hostel",
+      "citation": "Council of Wardens Hostel Bylaws 2026"
+    },
+    {
+      "question": "What is the fee payment mode at L-104 (Accounts)?",
+      "answer": "Net banking, UPI, Credit/Debit card (POS machines installed at L-104), or Demand Draft (DD) in favor of 'Director IIITDM Jabalpur' payable at Jabalpur. Cash exceeding Rs. 5,000 is strictly not accepted at Accounts counter.",
+      "category": "fees",
+      "citation": "Finance & Accounts Notification 2026"
+    },
+    {
+      "question": "Where can I take photocopies (Xerox) and passport photos?",
+      "answer": "The Central Xerox Center is located on the Ground Floor of LHTC (right next to room L-103) and also in the Campus Shopping Complex. They provide photocopies (Rs. 1.50/page) and instant passport photographs.",
+      "category": "facilities",
+      "citation": "Student Amenities Guide"
+    }
+  ]
+}

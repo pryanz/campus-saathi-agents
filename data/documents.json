@@ -1,0 +1,112 @@
+[
+  {
+    "id": "doc_class_10",
+    "name": "Class 10 (Secondary School Examination) Marksheet / Certificate",
+    "purpose": "Proof of Date of Birth (DOB) and candidate's & parents' name spelling.",
+    "applicability": ["OPEN", "GEN-EWS", "OBC-NCL", "SC", "ST", "PwD"],
+    "format_required": "Original certificate + 2 self-attested photocopies",
+    "validity_cutoff": "Must be issued by recognized board (CBSE/ICSE/State Board).",
+    "action_if_missing": "If minor spelling variation exists with JEE rank card, submit an affidavit on Rs. 50 stamp paper at Exception Desk (L-103).",
+    "source_url": "https://josaa.nic.in/document-verification-rules-2026.pdf",
+    "last_verified": "2026-10-15"
+  },
+  {
+    "id": "doc_class_12",
+    "name": "Class 12 (Qualifying Examination) Marksheet & Passing Certificate",
+    "purpose": "Proof of fulfilling minimum 75% aggregate marks (or top 20 percentile) eligibility.",
+    "applicability": ["OPEN", "GEN-EWS", "OBC-NCL", "SC", "ST", "PwD"],
+    "format_required": "Original marksheet + 2 self-attested photocopies",
+    "validity_cutoff": "Passed in 2024, 2025, or 2026. DigiLocker copy accepted ONLY if digitally signed or stamped by School Principal.",
+    "action_if_missing": "Unverified online printouts put on hold at Counter B until certified copy is arranged.",
+    "source_url": "https://josaa.nic.in/eligibility-criteria-2026.pdf",
+    "last_verified": "2026-10-15"
+  },
+  {
+    "id": "doc_obc_ncl",
+    "name": "OBC-NCL (Non-Creamy Layer) Certificate",
+    "purpose": "Reservation verification under Other Backward Classes (Non-Creamy Layer).",
+    "applicability": ["OBC-NCL"],
+    "format_required": "Original Central Government Format certificate + 2 photocopies",
+    "validity_cutoff": "STRICT CUTOFF: Must be issued ON OR AFTER April 1, 2026. Community must be listed in the Central List of OBCs.",
+    "action_if_missing": "State format or pre-April 2026 certificate is rejected at Counter B. Candidate must submit Undertaking (Annexure 7) at Exception Desk (L-103) promising submission within 7 days, else seat shifts to General in CSAB.",
+    "source_url": "https://josaa.nic.in/formats/OBC-NCL-Certificate-Format-2026.pdf",
+    "last_verified": "2026-10-20"
+  },
+  {
+    "id": "doc_gen_ews",
+    "name": "GEN-EWS (Economically Weaker Section) Certificate",
+    "purpose": "Reservation verification under General Economically Weaker Section category.",
+    "applicability": ["GEN-EWS"],
+    "format_required": "Original Central Government Format (Annexure 3) + 2 photocopies",
+    "validity_cutoff": "STRICT CUTOFF: Must be valid for Financial Year 2025-2026, issued ON OR AFTER April 1, 2026 by Tehsildar or above.",
+    "action_if_missing": "Requires Annexure 7 undertaking at Exception Desk if central copy is in transit.",
+    "source_url": "https://josaa.nic.in/formats/GEN-EWS-Format-2026.pdf",
+    "last_verified": "2026-10-20"
+  },
+  {
+    "id": "doc_sc_st",
+    "name": "SC / ST Caste Certificate",
+    "purpose": "Reservation verification for Scheduled Caste / Scheduled Tribe candidates.",
+    "applicability": ["SC", "ST"],
+    "format_required": "Original certificate in prescribed format + 2 photocopies",
+    "validity_cutoff": "No annual expiry, but must be issued by authorized competent authority (DM / ADM / Tehsildar / SDM).",
+    "action_if_missing": "Contact Exception Desk at L-103 if certificate lacks seal or officer designation.",
+    "source_url": "https://josaa.nic.in/formats/SC-ST-Certificate-Format-2026.pdf",
+    "last_verified": "2026-09-30"
+  },
+  {
+    "id": "doc_medical",
+    "name": "Medical Fitness Certificate",
+    "purpose": "Verification of medical soundness and fitness for academic and hostel residence.",
+    "applicability": ["OPEN", "GEN-EWS", "OBC-NCL", "SC", "ST", "PwD"],
+    "format_required": "Official JoSAA Annexure 8 format signed by registered Medical Practitioner (MBBS/MD) with Registration Number.",
+    "validity_cutoff": "Issued within 30 days prior to physical reporting date.",
+    "action_if_missing": "Visit Campus Primary Health Center (PHC, opposite Hall 3). Resident Medical Officer signs and certifies JoSAA medical forms after checkup between 9:00 AM and 6:00 PM.",
+    "source_url": "https://josaa.nic.in/formats/Medical-Certificate-Annexure-8.pdf",
+    "last_verified": "2026-10-18"
+  },
+  {
+    "id": "doc_anti_ragging",
+    "name": "Anti-Ragging Undertakings (Student & Parent)",
+    "purpose": "Statutory compliance with UGC Anti-Ragging Regulations.",
+    "applicability": ["OPEN", "GEN-EWS", "OBC-NCL", "SC", "ST", "PwD"],
+    "format_required": "Printed affidavits with online Reference Number from antiragging.in or amanmovement.org, signed by candidate and parent.",
+    "validity_cutoff": "Generated for academic session 2026-2027 with Institute: IIITDM Jabalpur.",
+    "action_if_missing": "Use Library 1st Floor Computer Terminals to submit online form and print at Central Xerox Center.",
+    "source_url": "https://www.antiragging.in/affidavit_registration_disclaimer.html",
+    "last_verified": "2026-10-25"
+  },
+  {
+    "id": "doc_gap_affidavit",
+    "name": "Gap Certificate / Year Gap Affidavit",
+    "purpose": "Affidavit explaining academic hiatus for competitive exam preparation.",
+    "applicability": ["DROPPERS", "YEAR_GAP"],
+    "format_required": "Original affidavit on Rs. 50 or Rs. 100 Non-Judicial Stamp Paper, attested by a Notary Public.",
+    "validity_cutoff": "Required for students who completed Class 12 in 2025 or earlier.",
+    "action_if_missing": "Campus Notary Desk at Administrative Block Room 102 prepares on-spot stamp paper and notary attestation for Rs. 120.",
+    "source_url": "https://www.iiitdmj.ac.in/academics/reporting_guidelines_2026.pdf",
+    "last_verified": "2026-10-28"
+  },
+  {
+    "id": "doc_seat_allotment",
+    "name": "JoSAA / CSAB Provisional Seat Allotment Letter & Rank Card",
+    "purpose": "Identity and admission quota verification at campus entry and reporting desks.",
+    "applicability": ["OPEN", "GEN-EWS", "OBC-NCL", "SC", "ST", "PwD"],
+    "format_required": "Clean printed color/B&W copy of final round allotment letter + JEE Main 2026 Rank Card.",
+    "validity_cutoff": "Final Round allotment letter with candidate photograph and QR code.",
+    "action_if_missing": "Print out at Central Xerox Center (LHTC Ground Floor).",
+    "source_url": "https://josaa.nic.in/candidate-portal-2026/",
+    "last_verified": "2026-10-30"
+  },
+  {
+    "id": "doc_fee_receipts",
+    "name": "Fee Payment Receipts (SAF, PAF, and Balance Institute Fee)",
+    "purpose": "Proof of Seat Acceptance Fee (SAF) and Partial Admission Fee (PAF) payment.",
+    "applicability": ["OPEN", "GEN-EWS", "OBC-NCL", "SC", "ST", "PwD"],
+    "format_required": "Transaction payment receipt printout showing JoSAA reference number.",
+    "validity_cutoff": "Cleared before final token clearance at Counter L-104 (Accounts).",
+    "action_if_missing": "Accounts counter staff at L-104 reconciles payments using candidate's JEE Application Number.",
+    "source_url": "https://www.iiitdmj.ac.in/admissions/fees_breakup_2026.pdf",
+    "last_verified": "2026-10-28"
+  }
+]

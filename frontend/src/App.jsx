@@ -2,17 +2,23 @@ import React, { useState, useEffect } from 'react';
 import CampusMap from './components/CampusMap';
 import MetricsPanel from './components/MetricsPanel';
 import ChatModal from './components/ChatModal';
+import WhatFirstModal from './components/WhatFirstModal';
 
 export default function App() {
   const [selectedAlgo, setSelectedAlgo] = useState('a_star');
   const [qIterations, setQIterations] = useState(100);
   const [useCongestion, setUseCongestion] = useState(true);
+  const [observationLevel, setObservationLevel] = useState(0); // 0: blind, 1: local, 2: global queues
   const [simulationData, setSimulationData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
+  const [isWhatFirstOpen, setIsWhatFirstOpen] = useState(false);
 
   const algorithms = [
     { id: 'a_star', label: 'A* Search' },
+    { id: 'queue_aware_a_star', label: 'Queue-Aware A* (Issue #22)' },
+    { id: 'ucs', label: 'Uniform Cost Search (UCS)' },
+    { id: 'value_iteration', label: 'Value Iteration (MDP)' },
     { id: 'bfs', label: 'Breadth-First Search (BFS)' },
     { id: 'dfs', label: 'Depth-First Search (DFS)' },
     { id: 'greedy_nearest', label: 'Greedy Nearest' },
@@ -23,10 +29,10 @@ export default function App() {
 
   const qIterationOptions = [10, 25, 50, 100, 500];
 
-  const runSimulation = async (algoId, congestionState, iterations = qIterations) => {
+  const runSimulation = async (algoId, congestionState, iterations = qIterations, obsLevel = observationLevel) => {
     setLoading(true);
     try {
-      const url = `http://127.0.0.1:8000/api/simulate/${algoId}?congestion=${congestionState}&iterations=${iterations}`;
+      const url = `http://127.0.0.1:8000/api/simulate/${algoId}?congestion=${congestionState}&iterations=${iterations}&observation_level=${obsLevel}`;
       const response = await fetch(url);
       const data = await response.json();
       setSimulationData(data);
@@ -38,24 +44,29 @@ export default function App() {
   };
 
   useEffect(() => {
-    runSimulation(selectedAlgo, useCongestion, qIterations);
+    runSimulation(selectedAlgo, useCongestion, qIterations, observationLevel);
   }, []);
 
   const handleAlgoClick = (algoId) => {
     setSelectedAlgo(algoId);
-    runSimulation(algoId, useCongestion, qIterations);
+    runSimulation(algoId, useCongestion, qIterations, observationLevel);
+  };
+
+  const handleObservationLevelChange = (level) => {
+    setObservationLevel(level);
+    runSimulation(selectedAlgo, useCongestion, qIterations, level);
   };
 
   const handleIterationsChange = (iter) => {
     setQIterations(iter);
     setSelectedAlgo('q_learning');
-    runSimulation('q_learning', useCongestion, iter);
+    runSimulation('q_learning', useCongestion, iter, observationLevel);
   };
 
   const handleToggleCongestion = () => {
     const nextState = !useCongestion;
     setUseCongestion(nextState);
-    runSimulation(selectedAlgo, nextState, qIterations);
+    runSimulation(selectedAlgo, nextState, qIterations, observationLevel);
   };
 
   return (
@@ -68,6 +79,16 @@ export default function App() {
         </div>
 
         <div className="flex items-center gap-3">
+          {/* 'What should I do first' planner button */}
+          <button
+            type="button"
+            onClick={() => setIsWhatFirstOpen(true)}
+            className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-slate-950 font-bold px-3.5 py-2.5 rounded-lg text-xs shadow-md shadow-amber-900/30 transition-all flex items-center gap-1.5 border border-amber-400/50 cursor-pointer"
+          >
+            <span>🧭</span>
+            <span>"What First?" Planner</span>
+          </button>
+
           {/* Chat button */}
           <button
             type="button"
@@ -103,6 +124,43 @@ export default function App() {
 
         {/* Right Sidebar: Controls & Metrics */}
         <div className="space-y-6">
+          {/* Environment Observability Controls (Issue #22) */}
+          <div className="bg-slate-900 p-5 rounded-xl border border-slate-700 shadow-xl">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-sm font-bold text-white flex items-center gap-1.5">
+                <span>👁️ Queue Observability</span>
+              </h3>
+              <span className="text-[10px] font-mono text-cyan-400 bg-cyan-950/80 px-2 py-0.5 rounded border border-cyan-800">
+                Level {observationLevel}
+              </span>
+            </div>
+            <p className="text-[11px] text-slate-400 mb-3 leading-relaxed">
+              Russell & Norvig Environment Visibility:
+            </p>
+            <div className="grid grid-cols-3 gap-1.5">
+              {[
+                { lvl: 0, label: 'L0: Blind', desc: 'No queues' },
+                { lvl: 1, label: 'L1: Local', desc: 'Current room' },
+                { lvl: 2, label: 'L2: Global', desc: 'Smart Campus' }
+              ].map((item) => (
+                <button
+                  key={item.lvl}
+                  type="button"
+                  onClick={() => handleObservationLevelChange(item.lvl)}
+                  disabled={loading}
+                  className={`py-2 px-1.5 rounded-lg text-xs font-semibold text-center border transition-all cursor-pointer ${
+                    observationLevel === item.lvl
+                      ? 'bg-cyan-600 text-white border-cyan-400 shadow-md shadow-cyan-950'
+                      : 'bg-slate-800/80 text-slate-400 border-slate-700 hover:text-white'
+                  }`}
+                >
+                  <div className="font-bold">{item.label}</div>
+                  <div className="text-[9px] opacity-75 font-normal mt-0.5">{item.desc}</div>
+                </button>
+              ))}
+            </div>
+          </div>
+
           {/* Algorithm Controls */}
           <div className="bg-slate-900 p-6 rounded-xl border border-slate-700 shadow-xl">
             <h3 className="text-lg font-bold mb-4">Select Algorithm</h3>
@@ -162,6 +220,9 @@ export default function App() {
 
       {/* Groq Chat Assistant Interface */}
       <ChatModal isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
+
+      {/* 'What should I do first' Planner Modal (Issue #22) */}
+      <WhatFirstModal isOpen={isWhatFirstOpen} onClose={() => setIsWhatFirstOpen(false)} />
     </div>
   );
 }

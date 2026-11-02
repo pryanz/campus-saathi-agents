@@ -1,6 +1,6 @@
 from typing import Optional
 
-from algorithms.astar import AStarAgent, SearchResult, action_cost, astar_search
+from algorithms.astar import AStarAgent, QueueAwareAStarAgent, SearchResult, action_cost, astar_search
 from algorithms.heuristics import zero_heuristic
 
 
@@ -11,11 +11,13 @@ def ucs_search(problem, initial_state=None, cost_fn=action_cost) -> SearchResult
 
 
 class UCSAgent(AStarAgent):
-    """Agent that plans with UCS (A* with h = 0) and executes the plan.
-
-    Inherits from ``BaseAgent`` through ``AStarAgent`` and implements
-    ``select_action(state, metrics)``.
-    """
+    """Agent that plans with UCS (A* with h = 0) and executes the plan."""
 
     def __init__(self, problem, name: str = "UCSAgent"):
         super().__init__(problem, heuristic=zero_heuristic, name=name)
+
+
+class QueueAwareUCSAgent(QueueAwareAStarAgent):
+    # ucs agent jo queue wait times ko cost me add karke plan karta hai
+    def __init__(self, problem, observation_level: int = 2, name: str = "QueueAwareUCS"):
+        super().__init__(problem, observation_level=observation_level, name=name)
