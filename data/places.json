@@ -1,0 +1,93 @@
+[
+  {
+    "id": "place_xerox",
+    "name": "Central Xerox & Stationery Center",
+    "category": "amenity",
+    "location": "LHTC Ground Floor (Adjacent to Room L-103) & Shopping Complex",
+    "operating_hours": "08:30 AM - 08:30 PM (All reporting days)",
+    "services": [
+      "Photocopy / Document Xerox (B&W Rs. 1.50/page, Color Rs. 5/page)",
+      "Instant Passport Size Photos (8 copies for Rs. 80)",
+      "Plastic document folders, staplers, glue sticks, blue pens",
+      "Printouts from USB drives or WhatsApp / Email"
+    ],
+    "contact": "+91-761-2794091",
+    "source_url": "https://www.iiitdmj.ac.in/campus/facilities.php",
+    "last_verified": "2026-10-25"
+  },
+  {
+    "id": "place_notary",
+    "name": "Campus Notary & Legal Affidavit Desk",
+    "category": "administrative",
+    "location": "Administrative Block, Room 102 (Right Wing)",
+    "operating_hours": "09:00 AM - 06:00 PM",
+    "services": [
+      "Non-Judicial Stamp Paper (Rs. 50 and Rs. 100) available on-spot",
+      "Gap Year Affidavit drafting and immediate notarization",
+      "Minor Name / DOB discrepancy affidavit attestation",
+      "Local Guardian Undertaking notarization"
+    ],
+    "rates": "Rs. 100 - Rs. 150 per affidavit inclusive of stamp paper.",
+    "source_url": "https://www.iiitdmj.ac.in/admissions/notary_notice_2026.pdf",
+    "last_verified": "2026-10-28"
+  },
+  {
+    "id": "place_phc",
+    "name": "Primary Health Center (PHC) & Medical Unit",
+    "category": "healthcare",
+    "location": "Central Campus Road (Directly Opposite Hall of Residence 3)",
+    "operating_hours": "24x7 Emergency; Routine Medical Endorsement: 09:00 AM - 06:00 PM",
+    "services": [
+      "JoSAA Annexure 8 Medical Fitness Certificate verification and physician signature",
+      "Blood Group testing (Instant report for Rs. 50)",
+      "First aid, ambulance, and general medicine dispensary"
+    ],
+    "head_doctor": "Dr. R. K. Sharma (Chief Medical Officer)",
+    "source_url": "https://www.iiitdmj.ac.in/phc/services.php",
+    "last_verified": "2026-10-20"
+  },
+  {
+    "id": "place_bank_atm",
+    "name": "State Bank of India (SBI) Branch & ATMs",
+    "category": "banking",
+    "location": "Campus Shopping Complex (Opposite Core Lab)",
+    "operating_hours": "Branch: 10:00 AM - 04:00 PM; ATMs: 24 Hours",
+    "services": [
+      "Demand Draft (DD) issuance for Institute fees",
+      "Cash withdrawal (2 operational ATMs)",
+      "Student zero-balance bank account opening desk"
+    ],
+    "source_url": "https://www.iiitdmj.ac.in/campus/banking.php",
+    "last_verified": "2026-10-15"
+  },
+  {
+    "id": "place_hostel_office",
+    "name": "Panini Hostel Caretaker & Warden Office",
+    "category": "hostel",
+    "location": "Panini Gate / Hall of Residence 1 & 4 Ground Floor",
+    "operating_hours": "09:00 AM - 07:00 PM",
+    "services": [
+      "Room keys handover and inventory clearance (bed, table, chair, almirah, fan)",
+      "Mess enrollment and Mess Card issuance",
+      "Parent temporary guest accommodation booking (Rs. 400/night)",
+      "Biometric access registration for hostel gate"
+    ],
+    "source_url": "https://www.iiitdmj.ac.in/hostels/allotment_protocol_2026.pdf",
+    "last_verified": "2026-10-30"
+  },
+  {
+    "id": "place_lhtc",
+    "name": "Lecture Hall Teaching Complex (LHTC)",
+    "category": "academic",
+    "location": "Academic Zone (Houses Rooms L-103, L-104, L-105, L-106, L-206)",
+    "operating_hours": "08:00 AM - 08:00 PM",
+    "services": [
+      "Primary Physical Reporting Hub",
+      "Parent waiting lounge and refreshment counter (Foyer)",
+      "Document Verification (L-103), Fees Clearance (L-104)",
+      "Department Registration (L-105), ID Biometrics (L-106), Library ERP (L-206)"
+    ],
+    "source_url": "https://www.iiitdmj.ac.in/campus/lhtc_layout.pdf",
+    "last_verified": "2026-10-28"
+  }
+]

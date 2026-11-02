@@ -1,0 +1,64 @@
+{
+  "academic_session": "2026-2027",
+  "batch": "UG_Freshers_BTech",
+  "source_url": "https://www.iiitdmj.ac.in/academics/calendar_2026_27.pdf",
+  "last_verified": "2026-10-25",
+  "events": [
+    {
+      "date": "2026-11-03",
+      "title": "Physical Reporting Day 1 (CSE & ECE Batches)",
+      "time": "09:00 AM - 05:30 PM",
+      "venue": "LHTC Main Auditorium & Rooms L-103 to L-106",
+      "mandatory": true,
+      "description": "Document verification, fee settlement, biometrics, and hostel key collection for Computer Science and Electronics branches."
+    },
+    {
+      "date": "2026-11-04",
+      "title": "Physical Reporting Day 2 (ME, Smart Manufacturing & Design Batches)",
+      "time": "09:00 AM - 05:30 PM",
+      "venue": "LHTC Main Auditorium & Rooms L-103 to L-106",
+      "mandatory": true,
+      "description": "Document verification, fee settlement, biometrics, and hostel key collection for Mechanical, SM, and Design students."
+    },
+    {
+      "date": "2026-11-05",
+      "title": "Institute Orientation & Director's Address",
+      "time": "10:00 AM - 01:00 PM",
+      "venue": "Institute Central Auditorium",
+      "mandatory": true,
+      "description": "Welcome address by Director, Dean of Academic Affairs, Dean of Students, and Chief Proctor. Parents welcome."
+    },
+    {
+      "date": "2026-11-06",
+      "title": "Academic Course Registration & ERP Portal Login Setup",
+      "time": "09:30 AM - 04:00 PM",
+      "venue": "Computer Center / Respective Department Labs",
+      "mandatory": true,
+      "description": "Semester 1 core subject registration, official institute email ID activation (@iiitdmj.ac.in), and campus Wi-Fi credentials setup."
+    },
+    {
+      "date": "2026-11-07",
+      "title": "Commencement of Semester 1 Lectures & Lab Classes",
+      "time": "08:30 AM onwards",
+      "venue": "LHTC Classrooms as per timetable",
+      "mandatory": true,
+      "description": "Official start of regular teaching and academic calendar schedule."
+    },
+    {
+      "date": "2026-11-15",
+      "title": "Deadline for Pending Document Submission (Undertaking Annexure 7)",
+      "time": "05:00 PM",
+      "venue": "Academic Affairs Section, Admin Block Room 104",
+      "mandatory": false,
+      "description": "Last date for students who submitted Annexure 7 (undertaking for OBC-NCL / EWS / 12th marksheet) to submit original central certificates."
+    },
+    {
+      "date": "2026-12-20",
+      "title": "Mid-Semester Examination Window",
+      "time": "As per exam timetable",
+      "venue": "LHTC Examination Halls",
+      "mandatory": true,
+      "description": "Formal written examinations for Semester 1 core courses."
+    }
+  ]
+}

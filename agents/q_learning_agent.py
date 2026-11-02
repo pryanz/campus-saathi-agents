@@ -19,8 +19,8 @@ class QLearningAgent(BaseAgent):
     def get_q(self, state_key, action):
         return self.q_table.get((state_key, action), 0.0)
 
-    def select_action(self, state, metrics=None):
-        #Selects an action using an epsilon-greedy policy
+    def select_action(self, state, metrics=None, observation=None):
+        # epsilon-greedy policy with optional queue penalty
         state_key = self._get_state_key(state)
         actions = self.problem.actions(state)
         
@@ -31,7 +31,15 @@ class QLearningAgent(BaseAgent):
         if random.random() < self.epsilon:
             return random.choice(actions)
 
-        q_values = [self.get_q(state_key, act) for act in actions]
+        # queue observation hone par congested rooms ko penalty
+        q_values = []
+        for act in actions:
+            val = self.get_q(state_key, act)
+            if observation and act[0] == "complete":
+                wait_penalty = observation.get(act[1], 0.0) * 0.5
+                val -= wait_penalty
+            q_values.append(val)
+
         max_q = max(q_values)
         
         # Handle ties randomly
