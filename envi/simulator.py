@@ -11,7 +11,7 @@ from algorithms.dfs import DFSAgent
 from algorithms.astar import AStarAgent
 
 class CampusSimulator:
-    def __init__(self, campus_map_path: str = "data/campus_map.json", steps_config_path: str = "data/steps.json", seed: int = 42):
+    def __init__(self, campus_map_path: str = "data/campus_map.json", steps_config_path: str = "data/steps.json", seed: int = 42, profile=None, rule_pack_version: str = "v1"):
         self.graph = CampusGraph(campus_map_path)
         
         with open(steps_config_path, 'r') as f:
@@ -20,7 +20,8 @@ class CampusSimulator:
         self.rng = get_rng(seed)
         self.bg_rng = get_rng(seed + 8888)
 
-        self.problem = CampusProblem(self.graph, steps_config=self.steps_config)
+        self.problem = CampusProblem(self.graph, steps_config=self.steps_config,
+                                     profile=profile, rule_pack_version=rule_pack_version)
         
         self.counters = {
             room_id: RoomCounter(room_id, self.steps_config)

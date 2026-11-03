@@ -1,9 +1,39 @@
 class CampusProblem:
-    def __init__(self, campus_graph, steps_config: dict, start_room: str = "gate"):
+    def __init__(self, campus_graph, steps_config: dict, start_room: str = "gate",
+                 profile=None, rule_pack_version: str = "v1", required_stations=None):
+        """Reporting problem over the campus graph.
+
+        With no profile (or explicit required_stations) every configured step is a
+        goal, exactly as before. With a StudentProfile, the rules engine decides
+        which stations that student must visit, and both goal_steps and
+        steps_config are narrowed to them so search agents (which read either)
+        keep working unchanged.
+        """
         self.graph = campus_graph
-        self.steps_config = steps_config
         self.start_room = start_room
-        self.goal_steps = set(steps_config.keys())
+        self.profile = profile
+        self.rule_pack_version = rule_pack_version
+        self.all_steps_config = steps_config
+        self.checklist = None
+
+        if required_stations is None and profile is not None:
+            from core.rules_engine import build_checklist
+            self.checklist = build_checklist(profile, rule_pack_version)
+            required_stations = self.checklist.required_stations
+
+        if required_stations is None:
+            self.steps_config = steps_config
+        else:
+            unknown = set(required_stations) - set(steps_config)
+            if unknown:
+                raise ValueError(
+                    f"Required stations not in steps config: {sorted(unknown)}"
+                )
+            self.steps_config = {
+                room: cfg for room, cfg in steps_config.items()
+                if room in set(required_stations)
+            }
+        self.goal_steps = set(self.steps_config.keys())
 
     def initial_state(self):
         

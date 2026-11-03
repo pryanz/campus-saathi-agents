@@ -1,0 +1,302 @@
+{
+    "version": "v1",
+    "academic_year": "2026-27",
+    "notes": "DRAFT rule pack based on standard JoSAA/CSAB reporting requirements. Verify every document, copy count and cutoff date against the official IIITDMJ document list before release.",
+    "stations": [
+        {
+            "id": "gate"
+        },
+        {
+            "id": "lhtc_gate"
+        },
+        {
+            "id": "L-103"
+        },
+        {
+            "id": "L-104"
+        },
+        {
+            "id": "L-105"
+        },
+        {
+            "id": "L-106"
+        },
+        {
+            "id": "L-206"
+        },
+        {
+            "id": "panini_gate",
+            "when": {
+                "hostel_required": [
+                    true
+                ]
+            }
+        },
+        {
+            "id": "room",
+            "when": {
+                "hostel_required": [
+                    true
+                ]
+            }
+        },
+        {
+            "id": "office",
+            "when": {
+                "hostel_required": [
+                    true
+                ]
+            }
+        },
+        {
+            "id": "shop"
+        }
+    ],
+    "documents": [
+        {
+            "id": "allotment_letter",
+            "name": "Seat allotment letter (JoSAA/CSAB)",
+            "copies": {
+                "original": 1,
+                "photocopy": 2
+            },
+            "station": "lhtc_gate",
+            "notes": "Printed seat allotment letter."
+        },
+        {
+            "id": "jee_main_scorecard",
+            "name": "JEE Main rank card / scorecard",
+            "copies": {
+                "original": 1,
+                "photocopy": 2
+            },
+            "station": "L-103"
+        },
+        {
+            "id": "class10_marksheet",
+            "name": "Class 10 certificate and marksheet",
+            "copies": {
+                "original": 1,
+                "photocopy": 2
+            },
+            "station": "L-103"
+        },
+        {
+            "id": "class12_marksheet",
+            "name": "Class 12 certificate and marksheet",
+            "copies": {
+                "original": 1,
+                "photocopy": 2
+            },
+            "station": "L-103"
+        },
+        {
+            "id": "photo_id",
+            "name": "Aadhaar card / government photo ID",
+            "copies": {
+                "original": 1,
+                "photocopy": 2
+            },
+            "station": "gate"
+        },
+        {
+            "id": "passport_photos",
+            "name": "Passport size photographs",
+            "copies": {
+                "original": 0,
+                "photocopy": 8
+            },
+            "station": "L-106",
+            "notes": "Recent colour photographs for ID card and records."
+        },
+        {
+            "id": "medical_fitness",
+            "name": "Medical fitness certificate",
+            "copies": {
+                "original": 1,
+                "photocopy": 1
+            },
+            "station": "L-103"
+        },
+        {
+            "id": "anti_ragging_affidavit",
+            "name": "Anti-ragging affidavit (student and parent)",
+            "copies": {
+                "original": 1,
+                "photocopy": 1
+            },
+            "station": "L-105"
+        },
+        {
+            "id": "fee_payment_proof",
+            "name": "Fee payment receipt / JoSAA seat acceptance fee proof",
+            "copies": {
+                "original": 1,
+                "photocopy": 2
+            },
+            "station": "L-104"
+        },
+        {
+            "id": "library_form",
+            "name": "Library membership form",
+            "copies": {
+                "original": 1,
+                "photocopy": 0
+            },
+            "station": "L-206"
+        },
+        {
+            "id": "obc_ncl_certificate",
+            "name": "OBC-NCL (non-creamy layer) certificate",
+            "copies": {
+                "original": 1,
+                "photocopy": 2
+            },
+            "station": "L-103",
+            "when": {
+                "category": [
+                    "OBC-NCL"
+                ]
+            },
+            "issued_on_or_after": "2026-04-01",
+            "notes": "Must be in the central-government format and issued for the current financial year."
+        },
+        {
+            "id": "ews_certificate",
+            "name": "EWS certificate",
+            "copies": {
+                "original": 1,
+                "photocopy": 2
+            },
+            "station": "L-103",
+            "when": {
+                "category": [
+                    "EWS"
+                ]
+            },
+            "issued_on_or_after": "2026-04-01"
+        },
+        {
+            "id": "sc_caste_certificate",
+            "name": "SC caste certificate",
+            "copies": {
+                "original": 1,
+                "photocopy": 2
+            },
+            "station": "L-103",
+            "when": {
+                "category": [
+                    "SC"
+                ]
+            }
+        },
+        {
+            "id": "st_caste_certificate",
+            "name": "ST caste certificate",
+            "copies": {
+                "original": 1,
+                "photocopy": 2
+            },
+            "station": "L-103",
+            "when": {
+                "category": [
+                    "ST"
+                ]
+            }
+        },
+        {
+            "id": "pwd_certificate",
+            "name": "PwD / disability certificate",
+            "copies": {
+                "original": 1,
+                "photocopy": 2
+            },
+            "station": "L-103",
+            "when": {
+                "pwd": [
+                    true
+                ]
+            }
+        },
+        {
+            "id": "domicile_certificate",
+            "name": "Domicile / residence certificate",
+            "copies": {
+                "original": 1,
+                "photocopy": 2
+            },
+            "station": "L-103",
+            "when": {
+                "home_state": {
+                    "not": [
+                        "Madhya Pradesh"
+                    ]
+                },
+                "category": [
+                    "OBC-NCL",
+                    "EWS",
+                    "SC",
+                    "ST"
+                ]
+            },
+            "notes": "Needed alongside a reservation certificate issued by a state other than the institute's state."
+        },
+        {
+            "id": "migration_certificate",
+            "name": "Migration certificate (previous board/institute)",
+            "copies": {
+                "original": 1,
+                "photocopy": 2
+            },
+            "station": "L-103",
+            "when": {
+                "admission_route": [
+                    "CSAB"
+                ]
+            },
+            "notes": "CSAB spot-round candidates should bring a migration certificate where applicable."
+        },
+        {
+            "id": "dasa_documents",
+            "name": "DASA/ICCR admission letter and passport",
+            "copies": {
+                "original": 1,
+                "photocopy": 2
+            },
+            "station": "L-103",
+            "when": {
+                "admission_route": [
+                    "DASA"
+                ]
+            }
+        },
+        {
+            "id": "hostel_allotment_letter",
+            "name": "Hostel allotment letter",
+            "copies": {
+                "original": 1,
+                "photocopy": 1
+            },
+            "station": "panini_gate",
+            "when": {
+                "hostel_required": [
+                    true
+                ]
+            }
+        },
+        {
+            "id": "warden_clearance_form",
+            "name": "Hostel declaration and warden clearance form",
+            "copies": {
+                "original": 1,
+                "photocopy": 1
+            },
+            "station": "office",
+            "when": {
+                "hostel_required": [
+                    true
+                ]
+            }
+        }
+    ]
+}

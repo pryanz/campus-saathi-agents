@@ -1,0 +1,70 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "Campus Saathi Rule Pack",
+    "description": "Versioned, data-driven rules that turn a student profile into a document checklist and a set of required reporting stations. All eligibility logic lives in these JSON files, never in Python.",
+    "type": "object",
+    "required": ["version", "stations", "documents"],
+    "properties": {
+        "version": {"type": "string", "description": "Rule pack version, e.g. 'v1'. Matches the file name rule_pack_<version>.json."},
+        "academic_year": {"type": "string"},
+        "notes": {"type": "string"},
+        "stations": {
+            "type": "array",
+            "description": "Reporting stations (keys of data/steps.json). A station is required if its 'when' matches the profile, or if any applicable document points to it.",
+            "items": {
+                "type": "object",
+                "required": ["id"],
+                "properties": {
+                    "id": {"type": "string"},
+                    "when": {"$ref": "#/$defs/criteria"}
+                },
+                "additionalProperties": false
+            }
+        },
+        "documents": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "required": ["id", "name", "copies", "station"],
+                "properties": {
+                    "id": {"type": "string"},
+                    "name": {"type": "string"},
+                    "copies": {
+                        "type": "object",
+                        "required": ["original", "photocopy"],
+                        "properties": {
+                            "original": {"type": "integer", "minimum": 0},
+                            "photocopy": {"type": "integer", "minimum": 0}
+                        },
+                        "additionalProperties": false
+                    },
+                    "station": {"type": "string", "description": "Station id where this document is checked."},
+                    "when": {"$ref": "#/$defs/criteria"},
+                    "cutoff_date": {"type": "string", "format": "date", "description": "Last date by which the document must be submitted (ISO 8601)."},
+                    "issued_on_or_after": {"type": "string", "format": "date", "description": "Certificate must be issued on or after this date to be valid."},
+                    "notes": {"type": "string"}
+                },
+                "additionalProperties": false
+            }
+        }
+    },
+    "additionalProperties": false,
+    "$defs": {
+        "criteria": {
+            "type": "object",
+            "description": "Applicability criteria. Every key must match (AND). Each value is a list of accepted values (OR) or {\"not\": [...]}. Keys are StudentProfile field names. Omit 'when' for 'applies to everyone'.",
+            "additionalProperties": {
+                "oneOf": [
+                    {"type": "array", "items": {"type": ["string", "boolean"]}},
+                    {"type": "boolean"},
+                    {
+                        "type": "object",
+                        "required": ["not"],
+                        "properties": {"not": {"type": "array", "items": {"type": ["string", "boolean"]}}},
+                        "additionalProperties": false
+                    }
+                ]
+            }
+        }
+    }
+}
