@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 from groq import Groq
 
 from backend.config import GROQ_MODEL
+from backend.observability import groq_call
 
 
 # ============================================================
@@ -211,11 +212,15 @@ def query_campus_helper(user_query: str, run_simulation_callback):
     ]
 
     # First Groq request: decide whether simulation tools are required.
-    response = client.chat.completions.create(
+    response = groq_call(
+        "navigation_tool_selection",
+        lambda: client.chat.completions.create(
+            model=GROQ_MODEL,
+            messages=messages,
+            tools=TOOLS,
+            tool_choice="auto",
+        ),
         model=GROQ_MODEL,
-        messages=messages,
-        tools=TOOLS,
-        tool_choice="auto",
     )
 
     response_message = response.choices[0].message
@@ -285,9 +290,13 @@ def query_campus_helper(user_query: str, run_simulation_callback):
 
     # Second Groq request: generate the final response
     # after all simulation tool calls have completed.
-    final_response = client.chat.completions.create(
+    final_response = groq_call(
+        "navigation_final_answer",
+        lambda: client.chat.completions.create(
+            model=GROQ_MODEL,
+            messages=messages,
+        ),
         model=GROQ_MODEL,
-        messages=messages,
     )
 
     return (
@@ -307,10 +316,14 @@ def generate_structured_rag_response(
         messages.extend(history)
     messages.append({"role": "user", "content": user_message})
 
-    response = client.chat.completions.create(
+    response = groq_call(
+        "knowledge_structured_answer",
+        lambda: client.chat.completions.create(
+            model=GROQ_MODEL,
+            messages=messages,
+            temperature=temperature,
+            response_format={"type": "json_object"},
+        ),
         model=GROQ_MODEL,
-        messages=messages,
-        temperature=temperature,
-        response_format={"type": "json_object"},
     )
     return response.choices[0].message.content or ""

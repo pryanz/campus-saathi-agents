@@ -1,151 +1,198 @@
-multi-agent campus reporting simulator. A first-time student must complete a checklist of reporting steps spread across a campus (academic block + hostel block), and different AI agents — classical search, local search, an MDP planner, and a reinforcement-learning agent — compete to finish in the least total time under queueing congestion.
+# Campus Saathi
 
-The project ships with:
+Campus Saathi is a campus-assistance application for students and parents completing physical reporting and related college procedures. It combines:
 
-a simulation engine (campus graph, FIFO room counters, a scripted crowd of background students),
-9 agents (BFS, DFS, IDS, UCS, A*, Greedy Nearest, Simulated Annealing, Value Iteration, Q-Learning),
-a FastAPI backend that runs simulations and exposes a chatbot,
-a React dashboard that animates each agent's route on the campus map and compares metrics,
-an LLM chat assistant (Groq) that runs the simulations as tools and tells a student where to go next.
-The problem
+- a campus routing simulator with classical search, heuristic search, reinforcement learning, value iteration, and simulated annealing; and
+- a grounded knowledge assistant that retrieves records from `data/knowledge/` and uses Groq for structured answer generation.
 
-A student arrives at the gate and must complete every reporting step on campus. Each step happens in a specific room and costs time:
+The application is designed to avoid inventing campus facts. Retrieval has a score threshold (the hard gate); unsupported questions return a safe `not_available` response with an official-site fallback.
 
-Total time = travel time + queue waiting time + service time
+## Routing problem
 
-The campus is a weighted graph of 11 nodes in two clusters, joined by costly crossing edges:
+A student starts at the gate and must complete every reporting step. The campus is a weighted graph of 11 nodes in neutral, academic, and hostel clusters. Each procedure has a room, mean service time, and counter configuration in `data/steps.json`.
 
-Cluster	Rooms
-Neutral	gate
-Academic	lhtc_gate, L-103, L-104, L-105, L-106, L-206
-Hostel	panini_gate, office, room, shop
+The simulator state is `(current_room, completed_steps)`. Actions are `("move", neighbour)` and `("complete", current_room)`. The goal is to complete every configured step, with:
 
-Each room has a step (e.g. Fee Clearance & Accounts at L-104, Warden Clearance at office), a mean service time and a number of counters. These live in data/campus_map.json and data/steps.json, so the campus can be changed without touching code.
+```text
+total cost = travel time + queue waiting time + service time
+```
 
-State: (current_room, frozenset(completed_steps)) Actions: ("move", neighbour) or ("complete", current_room) Goal: every step in steps.json is completed Cost: sum of edge travel times + service times + queue waits
+The formal problem definition is in [`docs/PROBLEM.md`](docs/PROBLEM.md), with environment and PEAS descriptions in [`docs/ENVIRONMENT.md`](docs/ENVIRONMENT.md) and [`docs/PEAS.md`](docs/PEAS.md).
 
-Formal write-ups are in docs/: PROBLEM.md, PEAS.md, ENVIRONMENT.md.
+### Agents
 
-Agents
-Agent	Family	File	Notes
-BFS	Uninformed search	algorithms/bfs.py	
-DFS	Uninformed search	algorithms/dfs.py	
-IDS	Uninformed search	algorithms/ids.py	Iterative deepening
-UCS	Uninformed, cost-aware	algorithms/ucs.py	A* with h = 0
-A*	Informed search	algorithms/astar.py	Admissible + consistent heuristics in heuristics.py (farthest-remaining-room, cluster-aware). See algorithms/astar.md for proofs
-Greedy Nearest	Heuristic	algorithms/greedy_nearest.py	Always goes to the nearest unfinished room (Dijkstra)
-Simulated Annealing	Local search	algorithms/simulated_annealing.py	Optimises visiting order; exact Held-Karp optimum used as a reference. See docs/algorithms/simulated_annealing.md
-Value Iteration	MDP planning	algorithms/value_iteration.py	State includes a low/medium/high congestion level (67,584 states). See docs/algorithms/value_iteration.md
-Q-Learning	Reinforcement learning	agents/q_learning_agent.py	Epsilon-greedy, tabular; trained online against the simulator
+| Agent | Family | Implementation | Notes |
+| --- | --- | --- | --- |
+| BFS / DFS / IDS | Uninformed search | `algorithms/` | Baseline graph searches |
+| UCS | Cost-aware search | `algorithms/ucs.py` | Uniform-cost search; A* with `h = 0` |
+| A* | Informed search | `algorithms/astar.py` | Farthest-remaining-room and cluster-aware heuristics |
+| Greedy Nearest | Heuristic | `algorithms/greedy_nearest.py` | Chooses the nearest unfinished room |
+| Simulated Annealing | Local search | `algorithms/simulated_annealing.py` | Optimizes the visit order |
+| Value Iteration | MDP planning | `algorithms/value_iteration.py` | Includes low/medium/high congestion states |
+| Q-Learning | Reinforcement learning | `agents/q_learning_agent.py` | Tabular epsilon-greedy agent trained online |
 
-All agents extend BaseAgent (agents/base_agent.py) and implement select_action(state, metrics).
+All agents implement the common `BaseAgent` interface. `CampusSimulator` uses seeded randomness, 20 background students, FIFO room queues, and congestion-dependent waiting. Set `congestion=false` to compare travel and service costs without queue dynamics. API simulations use seed `42`; Q-learning tables are cached by iteration count after the first request.
 
-How the simulator models congestion
+## Repository layout
 
-envi/simulator.py runs one episode for an agent and returns a step-by-step trace plus metrics.
+| Path | Purpose |
+| --- | --- |
+| `backend/` | FastAPI API, intent routing, BM25 retrieval, structured RAG, and Groq integration |
+| `agents/`, `algorithms/`, `core/`, `envi/` | Search agents, planning algorithms, metrics, campus graph, and simulator |
+| `data/` | Campus graph, procedure steps, and typed knowledge records |
+| `frontend/` | React/Vite interface with map, chat, and metrics panels |
+| `tests/` | Unit, contract, retrieval, algorithm, and evaluation-set tests |
+| `scripts/` | Knowledge and evaluation-set validators |
+| `docs/` | API contract, environment, problem, PEAS, conventions, and algorithm notes |
+| `experiments/` | Training/evaluation entry points for selected agents |
 
-Every room with a step has a RoomCounter (core/counters.py): a FIFO queue served by num_counters parallel counters, with gamma-distributed service times.
-20 background students wander the campus on shortest paths and join queues, so congestion is stochastic but reproducible (seeded; the API uses seed=42).
-When the agent completes a step with congestion on, it waits roughly in proportion to the queue length / crowd in that room and the room's mean service time.
-Congestion can be switched off to compare agents on pure travel + service cost.
-Project structure
-.
-├── agents/            BaseAgent + Q-learning agent
-├── algorithms/        BFS, DFS, IDS, UCS, A*, Greedy, Simulated Annealing, Value Iteration, heuristics
-├── core/              CampusProblem (formulation), RoomCounter (queues), MetricsTracker, seeding
-├── envi/              CampusGraph + CampusSimulator
-├── data/              campus_map.json, steps.json
-├── backend/           FastAPI app (main.py) + Groq chat service (groq_service.py)
-├── frontend/          React + Vite dashboard
-├── experiments/       Training / evaluation scripts
-├── tests/             pytest suite
-└── docs/              Problem formulation, PEAS, environment, algorithm write-ups
-Getting started
-Prerequisites
-Python 3.10+ (the code uses list[str] type hints)
-Node.js 18+ and npm (for the dashboard)
-A Groq API key (only needed for the chat assistant)
-1. Backend
+## Requirements
 
-From the repository root (the backend reads data/*.json using relative paths):
+- Python 3.14 is the currently verified interpreter in this workspace.
+- Node.js and npm for the frontend.
+- A Groq API key for requests that reach the LLM. Greeting, link, and most local routing behavior can be tested without an LLM, but importing `backend.groq_service` still requires `GROQ_API_KEY`.
 
-bash
+## Setup
+
+Create a virtual environment and install the pinned backend dependencies:
+
+```bash
 python -m venv .venv
-source .venv/bin/activate        # Windows: .venv\Scripts\activate
-pip install -r requirements.txt
+.venv/bin/python -m pip install -r requirements.txt
+```
 
+Copy the environment examples and fill in the backend key:
+
+```bash
 cp backend/.env.example backend/.env
-# edit backend/.env and set GROQ_API_KEY=<your key>
+cp frontend/.env.example frontend/.env
+```
 
-uvicorn backend.main:app --reload --port 8000
+Set at least `GROQ_API_KEY` in `backend/.env`. The other backend settings are:
 
-The API is now at http://127.0.0.1:8000 (interactive docs at /docs).
+| Variable | Default | Meaning |
+| --- | --- | --- |
+| `GROQ_API_KEY` | none | API key required by the Groq client |
+| `GROQ_MODEL` | `qwen/qwen3.8-27b` | Groq model used for navigation and structured RAG |
+| `KB_MIN_SCORE` | `0.20` | BM25 retrieval threshold used by the knowledge hard gate |
+| `CORS_ORIGINS` | not currently read by the backend | Documented example value; the API currently permits all origins |
+| `GROQ_METRICS_LOG` | `logs/groq_calls.jsonl` | Redacted JSONL timing and usage log for each Groq call |
 
-2. Frontend
-bash
+Do not commit `backend/.env` or API keys.
+
+## Run locally
+
+Start the API from the repository root:
+
+```bash
+.venv/bin/uvicorn backend.main:app --reload --host 127.0.0.1 --port 8000
+```
+
+In a second terminal, start the frontend:
+
+```bash
 cd frontend
 npm install
 npm run dev
+```
 
-Open the URL Vite prints (usually http://localhost:5173). The frontend expects the backend at http://127.0.0.1:8000.
+The Vite app uses `VITE_API_URL`, defaulting to `http://127.0.0.1:8000`.
 
-API
-Method	Endpoint	Description
-GET	/api/map	Campus nodes and edges
-GET	/api/simulate/{agent_type}	Run one episode and return the trace and metrics
-POST	/api/chat	Ask the LLM assistant; body: {"query": "..."}
+## API
 
-/api/simulate/{agent_type}
+### `GET /api/map`
 
-agent_type: a_star, ucs, bfs, dfs, ids, greedy_nearest, simulated_annealing, value_iteration, q_learning (also q_learning_<iterations>).
+Returns the graph in `data/campus_map.json`.
 
-Query param	Default	Meaning
-congestion	true	Enable queues and background students
-iterations	100	Q-learning training episodes
-start_location	gate	Room to start from
-completed_steps	none	Repeatable; steps already done
-bash
-curl "http://127.0.0.1:8000/api/simulate/a_star?congestion=true"
-curl "http://127.0.0.1:8000/api/simulate/q_learning?iterations=500&start_location=L-103&completed_steps=gate&completed_steps=lhtc_gate"
+### `GET /api/simulate/{agent_type}`
 
-Response shape:
+Runs one campus episode. Supported agent names are `a_star`, `bfs`, `dfs`, `greedy_nearest`, `ids`, `simulated_annealing`, `q_learning`, `value_iteration`, and `ucs`.
 
-jsonc
+Useful query parameters include:
+
+```text
+congestion=true|false
+iterations=100                 # used by q_learning
+start_location=gate
+completed_steps=gate&completed_steps=shop
+```
+
+The response includes the route trace and `metrics` with `travel_time`, `wait_time`, `service_time`, and `total_cost`.
+
+### `POST /api/chat`
+
+Request:
+
+```json
 {
-  "agent": "AStarAgent",
-  "total_steps": 42,
-  "metrics": { "travel_time": 0, "wait_time": 0, "service_time": 0, "total_cost": 0 },
-  "trace": [
-    { "step": 1, "current_room": "gate", "completed_steps": ["gate"], "action_taken": ["complete", "gate"] }
-  ],
-  "background_steps": [ [ { "id": "student_1", "current_room": "L-104" } ] ]
+  "query": "Where is the central library?",
+  "history": []
 }
+```
 
-Q-learning agents are trained on request and cached per iteration count, so the first call with a new iterations value is slower.
+`history` accepts at most six non-empty user/assistant messages. The response contains `response`, `found`, `answer_type`, `sources`, `links`, and optional `node_id`/`last_verified` fields. `answer_type` is one of `knowledge`, `navigation`, `link`, or `not_available`.
 
-Chat assistant
+See [`docs/CHAT_API.md`](docs/CHAT_API.md) for the contract. The API currently enables CORS for all origins; restrict this before production deployment.
 
-POST /api/chat sends the student's message to a Groq-hosted LLM with two tools, simulate_all_paths and simulate_path, which call the simulator. The model extracts the student's current location and completed steps from the message, runs the algorithms, picks the cheapest route, and replies with just the route and the immediate next step.
+## Knowledge data and evaluation set
 
-Example prompts: "I'm at L-104 and have finished the gate and allotment verification — what next?"
+Knowledge records are JSON files under `data/knowledge/`. Their schema and cross-file conventions are documented in [`data/knowledge/SCHEMA.md`](data/knowledge/SCHEMA.md) and [`docs/CONVENTIONS.md`](docs/CONVENTIONS.md).
 
-Notes:
+Run the data checks from the repository root:
 
-The model name is set in backend/groq_service.py; change it there if your Groq account uses a different one.
-The chat tools currently cover a_star, bfs, dfs, greedy_nearest and q_learning only.
-Tests and experiments
-bash
-pip install pytest
-python -m pytest
+```bash
+.venv/bin/python scripts/validate_knowledge.py
+.venv/bin/python scripts/check_eval_set.py
+.venv/bin/python scripts/run_eval.py --output .benchmarks/eval.json
+```
 
-Experiments (run from the repo root):
+The evaluation set is intended to cover answerable, unanswerable, near-miss, prompt-injection, and Hinglish queries. It currently contains 80 questions and checks against the knowledge-record IDs.
 
-bash
-python -m experiments.eval_simulated_annealing   # cooling schedules vs. exact Held-Karp optimum
-python -m experiments.eval_value_iteration       # value iteration vs. a nearest-room baseline
-python -m experiments.train_q                    # Q-learning learning curve at episode milestones
-Known issues
-CampusSimulator.run_simulation returns metrics nested under "metrics", but a few older callers still read them from the top level. As a result tests/simulated_annealing_test.py::test_simulator_travel_matches_the_plan and tests/value_iteration_test.py::test_policy_completes_every_step_in_simulator fail, and experiments/train_q.py and experiments/eval_value_iteration.py crash with a KeyError / TypeError. The fix is to read result["metrics"][...].
-The frontend hardcodes http://127.0.0.1:8000; change it in App.jsx, CampusMap.jsx and ChatModal.jsx if you deploy the backend elsewhere.
-CORS is open to all origins (allow_origins=["*"]), which is fine for local development but should be restricted in production.
-docs/PROBLEM.md mentions 10 reporting steps, but data/steps.json defines 11 (including the gate step), and the goal test uses all of them.
+## Tests and frontend checks
+
+```bash
+.venv/bin/pytest -q
+cd frontend
+npm run build
+npm run lint
+```
+
+The frontend build is a production compile. `npm run lint` currently completes with warnings in `App.jsx` and `CampusMap.jsx`; these should be cleaned up before treating lint as a quality gate.
+
+## Benchmark plan
+
+`scripts/run_eval.py` runs the checked question set and records per-question responses and latency. The following additional measurements make results reproducible and useful:
+
+| Area | Metrics | Recommended comparison |
+| --- | --- | --- |
+| LLM serving | input tokens/sec, output tokens/sec, time-to-first-token, end-to-end latency, p50/p95, errors, retries | model and prompt variants under the same query set |
+| RAG | retrieval latency, top-score distribution, recall@k, answerable precision/recall, unsupported-question false-positive rate | `KB_MIN_SCORE` values and BM25 top-k settings |
+| Routing | total cost, travel/wait/service time, nodes expanded, route success, optimality gap | every agent with congestion on/off and fixed seeds |
+| API | p50/p95 latency, throughput, status codes, concurrency, payload size | `/api/chat`, `/api/simulate/{agent_type}`, and `/api/map` separately |
+| Frontend | bundle size, initial load, interaction latency | production build and representative device/network profiles |
+
+For token throughput, use provider-reported usage rather than estimating from characters:
+
+```text
+output_tokens_per_second = completion_tokens / generation_seconds
+input_tokens_per_second  = prompt_tokens / prompt_processing_seconds
+```
+
+Each Groq call now writes latency, `response.usage.prompt_tokens`, `completion_tokens`, `total_tokens`, and derived output tokens/sec to the JSONL metrics log. Prompts, responses, API keys, and personal data are not written. Calls are non-streaming, so time-to-first-token is not available; use end-to-end call latency. For fair results, warm up the process, fix the model and seed, run at least 30 repetitions per case, report p50/p95, and separate first-request latency from warm-cache latency.
+
+A useful first benchmark corpus is `tests/eval/questions.json`, supplemented with navigation queries that specify start locations and completed steps. Report answer quality separately from speed: an answer can be fast but fail grounding or the hard-gate safety requirement.
+
+## Known audit notes
+
+- The repository's knowledge validator and evaluation-set checker pass against the current data.
+- A live 80-question run recorded 0/25 unsupported false positives (0.0%); 24/55 supported questions produced a grounded answer. The latter is limited by an eval-data mismatch: expected `procedure_*` IDs come from `data/steps.json`, while the RAG index loads only `data/knowledge/*.json`.
+- That run made 70 Groq calls including retries: 34,173 prompt tokens, 3,997 completion tokens, p50 latency 3.55s, p95 latency 10.37s, and mean output throughput 72.34 tokens/sec. These are one-run results, not a service-level guarantee.
+- The frontend production build succeeds; lint exits successfully but emits warnings.
+- The Python suite requires the dependencies in `requirements.txt`. Under Python 3.14, the dependency-complete run progresses through the algorithm tests but stalls at `tests/test_chat_contract.py::test_chat_endpoint_basic` because Starlette's synchronous `TestClient`/AnyIO portal hangs even for a minimal app; use Python 3.13 or migrate these tests to an async ASGI client.
+- `backend/.env.example` includes `CORS_ORIGINS`, but the backend does not currently read it and configures `allow_origins=["*"]`.
+- `docs/CHAT_API.md` contains Markdown-style links inside JSON examples; actual API URLs are plain URL strings as defined by the Pydantic response models.
+- `TestClient` stalls under the verified Python 3.14 environment even for a minimal FastAPI app. The direct endpoint function succeeds; the failure is in the Starlette/AnyIO test harness compatibility and is not a production endpoint hang. `httpx2` is now declared because Starlette 1.10 requires it, but the Python 3.14 harness issue remains to be resolved or tested under Python 3.13.
+
+## License
+
+See [`LICENSE`](LICENSE).
